@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import za.ac.tut.usedbook.usedbook.TestBase;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
 import za.ac.tut.usedbook.usedbook.repository.BookRepository;
 
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
 //@Ignore
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest
-public class BookServiceTest {
+public class BookServiceTest extends TestBase {
 
     private BookService service;
 
@@ -120,9 +121,7 @@ public class BookServiceTest {
      * get book<> by title, category, isbn
      * update a book status
      */
-    private Book getSingleBook() {
-        return new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "ON-SALE","additionalIno");
-    }
+
     private List<Book> getListOfBooks() {
         List<Book> books = new ArrayList<Book>();
         books.add(new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "SOLD","additionalIno"));

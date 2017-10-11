@@ -1,5 +1,6 @@
 package za.ac.tut.usedbook.usedbook;
 
+import za.ac.tut.usedbook.usedbook.entiy.Book;
 import za.ac.tut.usedbook.usedbook.entiy.Student;
 
 import javax.xml.bind.DatatypeConverter;
@@ -38,5 +39,9 @@ public class TestBase {
 
     public Student getExistingStudent(){
         return  new Student(2100, "Lebo", "Mmala", 400.80, "pass01",true, null);
+    }
+
+    public Book getSingleBook() {
+        return new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",300.90, "ON-SALE","additionalIno");
     }
 }
