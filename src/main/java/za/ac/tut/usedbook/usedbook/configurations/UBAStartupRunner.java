@@ -13,6 +13,7 @@ import za.ac.tut.usedbook.usedbook.service.BookService;
  */
 @Component
 public class UBAStartupRunner implements CommandLineRunner {
+//    private static final Logger slf4jLogger = LoggerFactory.getLogger(UBAStartupRunner.class);
 
     @Autowired
     private StudentRepository studentRepository;
@@ -33,11 +34,19 @@ public class UBAStartupRunner implements CommandLineRunner {
         Student student = new Student(2100, "Lebo", "Mmala", 400.80, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
         Book book = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "ON-SALE","additionalIno");
 
-        studentRepository.save(student);
-        bookService.save(book);
+//        studentRepository.save(student);
+//        bookService.save(book);
 
 
         System.out.println("ApplicationStartupRunner run method Started !!\n");
-        System.out.println(studentRepository.findAll().iterator().next().getLoggedIn());
+//        slf4jLogger.trace("Hello World!");
+//
+//        String name = "Abhijit";
+//        slf4jLogger.debug("Hi, {}", name);
+//        slf4jLogger.info("Welcome to the HelloWorld example of Logback.");
+//        slf4jLogger.warn("Dummy warning message.");
+//        slf4jLogger.error("Dummy error message.");
+//        System.out.println(studentRepository.findAll().iterator().next().getLoggedIn());
+
     }
 }

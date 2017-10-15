@@ -3,12 +3,27 @@ package za.ac.tut.usedbook.usedbook.service;
 import org.springframework.stereotype.Service;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
 import za.ac.tut.usedbook.usedbook.entiy.Student;
+import za.ac.tut.usedbook.usedbook.repository.BookRepository;
+import za.ac.tut.usedbook.usedbook.repository.PaymentRepository;
+import za.ac.tut.usedbook.usedbook.repository.StudentRepository;
 
 /**
  * Created by gracem on 2017/09/30.
  */
 @Service
 public class PaymentService {
+
+    private BookRepository bookRepository;
+    private StudentRepository studentRepository;
+    private PaymentRepository paymentRepository;
+//
+//    @Autowired
+//    public PaymentService(BookRepository bookRepository, StudentRepository studentRepository, PaymentRepository paymentRepository) {
+//        this.bookRepository = bookRepository;
+//        this.studentRepository = studentRepository;
+//        this.paymentRepository = paymentRepository;
+//    }
+
 
     public void processPayment() {
         Student buyer;

@@ -29,7 +29,7 @@ public class BookService {
         if(bookRepository.findByIsbn(book.getIsbn())!= null){
             throw new BookISBNException();
         }
-        book.setStatus("On Sale");
+        book.setStatus("ON-SALE");
         book.setCreatedAt(Helper.currentDate());
         return bookRepository.save(book);
     }
