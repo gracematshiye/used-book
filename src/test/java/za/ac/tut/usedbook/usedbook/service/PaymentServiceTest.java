@@ -58,9 +58,11 @@ public class PaymentServiceTest extends TestBase{
         assertThat(result).isTrue();
 
         student.setFunds(320.00);
-        book.setPrice(320.00);
+        book.setPrice(310.00);
         result = paymentService.isFundsSufficient(student, book);
         assertThat(result).isTrue();
+        System.out.println(book.getPrice());
+        System.out.println(student.getFunds());
     }
 
     @Test
@@ -70,6 +72,8 @@ public class PaymentServiceTest extends TestBase{
         student.setFunds(10.70);
         Book book = getSingleBook();
 
+        System.out.println(book.getPrice());
+        System.out.println(student.getFunds());
         try{
             paymentService.isFundsSufficient(student, book);
             fail("Did not throw InsufficientFundsException");

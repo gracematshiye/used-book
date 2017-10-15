@@ -1,16 +1,18 @@
 package za.ac.tut.usedbook.usedbook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import za.ac.tut.usedbook.usedbook.entiy.Book;
+import za.ac.tut.usedbook.usedbook.entiy.Payment;
+import za.ac.tut.usedbook.usedbook.entiy.Student;
 import za.ac.tut.usedbook.usedbook.service.BookService;
 import za.ac.tut.usedbook.usedbook.service.LoginService;
 import za.ac.tut.usedbook.usedbook.service.PaymentService;
 import za.ac.tut.usedbook.usedbook.service.StudentService;
+import za.ac.tut.usedbook.usedbook.validation.Helper;
 
 /**
  * Created by gracem on 2017/10/12.
@@ -35,20 +37,24 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/pay/{book_id}", method = RequestMethod.GET)
-    public ResponseEntity makePayment (@PathVariable("book_id") Integer bookId/*@RequestHeader HttpHeaders headers*/){
+    public ResponseEntity makePayment (@PathVariable("book_id") Integer bookId, @RequestHeader HttpHeaders headers) throws Exception {
         try {
-//            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
-//            loginService.isStudentLoggedOn(uuid);
-//            Student student = studentService.findBySessionKey(uuid);
-//            Book book = bookService.findById(bookId);
-//            paymentService.processPayment();
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
 
+            Book book = bookService.findById(bookId);
+            Student buyer = loginService.findStudentBySessionKey(uuid);
+            Student seller = loginService.findStudentByUsername(book.getSellerId());
 
+            Payment payment = paymentService.processPayment(book, buyer);
 
+//            PaymentViewModel viewModel = new PaymentViewModel(payment, buyer, seller,book);
 
-            return new ResponseEntity("Spring REST Dinesh on Java!!!", HttpStatus.OK);
+            return new ResponseEntity(payment, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
+
+
 }

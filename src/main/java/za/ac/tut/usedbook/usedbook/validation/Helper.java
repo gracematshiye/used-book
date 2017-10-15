@@ -11,6 +11,7 @@ import java.util.UUID;
  * Created by gracem on 2017/09/30.
  */
 public class Helper {
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public static String encodeStringToBase64(String plainString) {
         byte[] plainCredsBytes = plainString.getBytes();
@@ -42,6 +43,17 @@ public class Helper {
     public static String currentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         return sdf.format(new Date());
+    }
+
+
+    public static String generatePaymentReference() throws Exception  {
+        int count = 10;
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return (builder.toString());
     }
 
 }

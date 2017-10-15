@@ -13,23 +13,28 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "buyer_id")
-    private String buyerId;
+    private Integer buyerId;
     @Column(name = "seller_id")
-    private String sellerId;
+    private Integer sellerId;
     @Column(name = "book_id")
-    private String bookId;
+    private Integer bookId;
     @Column(name = "amount")
     private double amount;
     @Column(name = "payment_date")
     private String paymentDate;
+    @Column(name = "payment_reference")
+    private String paymentReference;
 
-    public Payment(String buyerId, String sellerId, String bookId, double amount, String paymentDate) {
+    public Payment(Integer buyerId, Integer sellerId, Integer bookId, double amount, String paymentDate, String paymentReference) {
         this.buyerId = buyerId;
         this.sellerId = sellerId;
         this.bookId = bookId;
         this.amount = amount;
         this.paymentDate = paymentDate;
+        this.paymentReference = paymentReference;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -39,27 +44,27 @@ public class Payment {
         this.id = id;
     }
 
-    public String getBuyerId() {
+    public Integer getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(String buyerId) {
+    public void setBuyerId(Integer buyerId) {
         this.buyerId = buyerId;
     }
 
-    public String getSellerId() {
+    public Integer getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(String sellerId) {
+    public void setSellerId(Integer sellerId) {
         this.sellerId = sellerId;
     }
 
-    public String getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
@@ -77,5 +82,13 @@ public class Payment {
 
     public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public String getPaymentReference() {
+        return paymentReference;
+    }
+
+    public void setPaymentReference(String paymentReference) {
+        this.paymentReference = paymentReference;
     }
 }

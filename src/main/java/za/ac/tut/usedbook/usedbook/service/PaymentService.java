@@ -1,11 +1,14 @@
 package za.ac.tut.usedbook.usedbook.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
+import za.ac.tut.usedbook.usedbook.entiy.Payment;
 import za.ac.tut.usedbook.usedbook.entiy.Student;
 import za.ac.tut.usedbook.usedbook.repository.BookRepository;
 import za.ac.tut.usedbook.usedbook.repository.PaymentRepository;
 import za.ac.tut.usedbook.usedbook.repository.StudentRepository;
+import za.ac.tut.usedbook.usedbook.validation.Helper;
 
 /**
  * Created by gracem on 2017/09/30.
@@ -16,25 +19,51 @@ public class PaymentService {
     private BookRepository bookRepository;
     private StudentRepository studentRepository;
     private PaymentRepository paymentRepository;
-//
-//    @Autowired
-//    public PaymentService(BookRepository bookRepository, StudentRepository studentRepository, PaymentRepository paymentRepository) {
-//        this.bookRepository = bookRepository;
-//        this.studentRepository = studentRepository;
-//        this.paymentRepository = paymentRepository;
-//    }
 
-
-    public void processPayment() {
-        Student buyer;
-        Student seller;
-        Book book;
-
-        //TODO: save all this instance
-        //TODO: return payment object
+    @Autowired
+    public PaymentService(BookRepository bookRepository, StudentRepository studentRepository, PaymentRepository paymentRepository) {
+        this.bookRepository = bookRepository;
+        this.studentRepository = studentRepository;
+        this.paymentRepository = paymentRepository;
     }
 
-//1
+    public PaymentService() {
+
+    }
+
+
+    public Payment processPayment(Book book, Student buyer) throws Exception {
+        Student seller = studentRepository.findByStudentId(book.getSellerId());
+        isBookONSALE(book);
+        isFundsSufficient(buyer, book);
+        isSellerBuying(book,buyer);
+
+        buyer = deductFunds(buyer, book);
+        seller = increaseFunds(seller, book);
+        book = changeBookStatus(book);
+
+        Payment payment = new Payment(buyer.getStudentId(),
+                seller.getStudentId(),book.getId(),
+                book.getPrice(), Helper.currentDate(),
+                Helper.generatePaymentReference());
+        //TODO: save all changes
+        studentRepository.save(seller);
+        studentRepository.save(buyer);
+        bookRepository.save(book);
+
+        //TODO: return payment object
+        return paymentRepository.save(payment);
+
+    }
+
+    public boolean isSellerBuying(Book book, Student buyer) {
+        if(book.getSellerId().equals(buyer.getStudentId())){
+            throw new PaymentException();
+        }
+        return true;
+    }
+
+    //1
     public boolean isBookONSALE(Book book) {
         if(book.getStatus().equals("SOLD")){
             throw new BookStatusException();
@@ -64,6 +93,9 @@ public class PaymentService {
         return book;
     }
 
+//    public Payment findByReference(String ref) {
+//        return new Payment();
+//    }
 
 
     public class InsufficientFundsException extends RuntimeException{
@@ -81,4 +113,13 @@ public class PaymentService {
             return message;
         }
     }
+
+    public class PaymentException extends RuntimeException {
+        private final String message = "Student can't purchase his or her own book posted";
+        @Override
+        public String getMessage() {
+            return message;
+        }
+    }
+
 }
