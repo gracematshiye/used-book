@@ -26,9 +26,9 @@ public class BookService {
     public Book save(Book book) throws BookISBNException {
 
         ValidateISBN.isISBN_valid(book.getIsbn());
-        if(bookRepository.findByIsbn(book.getIsbn())!= null){
-            throw new BookISBNException();
-        }
+//        if(bookRepository.findByIsbn(book.getIsbn())!= null){
+//            throw new BookISBNException();
+//        }
         book.setStatus("ON-SALE");
         book.setCreatedAt(Helper.currentDate());
         return bookRepository.save(book);

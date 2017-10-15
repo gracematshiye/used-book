@@ -8,9 +8,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
+import za.ac.tut.usedbook.usedbook.entiy.Student;
 import za.ac.tut.usedbook.usedbook.service.BookService;
 import za.ac.tut.usedbook.usedbook.service.LoginService;
 import za.ac.tut.usedbook.usedbook.validation.Helper;
+import za.ac.tut.usedbook.usedbook.viewModel.ListBookViewModel;
+import za.ac.tut.usedbook.usedbook.viewModel.NewBookViewModel;
+import za.ac.tut.usedbook.usedbook.viewModel.UserViewModel;
+
+import java.util.List;
 
 /**
  * Created by gracem on 2017/09/24.
@@ -45,48 +51,46 @@ public class BookController {
     @RequestMapping(value = "/add",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity createBook(@RequestBody Book book/*, UriComponentsBuilder ucBuilder*/) {
+    public @ResponseBody ResponseEntity createBook(@RequestBody Book book, @RequestHeader HttpHeaders headers) {
 
-        Book savedBook = bookService.save(book);
-//        book.setCreatedAt(date);
-//        service.save(book);
-//        logger.info("Creating User : {}", user);
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
 
-//        TODO: check if the smae does not post an exiting book on the use's account
-//        if (userService.isUserExist(user)) {
-//            logger.error("Unable to save. A User with name {} already exist", user.getName());
-//            return new ResponseEntity(new CustomErrorType("Unable to save. A User with name " +
-//                    user.getName() + " already exist."),HttpStatus.CONFLICT);
-//        }
+            Book savedBook = bookService.save(book);
 
-//        TODO: call service to save book
-//        userService.saveUser(user);
+            NewBookViewModel viewModel = new NewBookViewModel(student,savedBook);
 
-//        TODO: UriComponentsBuilder is for what????
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setLocation(ucBuilder.path("/api/user/{id}").buildAndExpand(user.getId()).toUri());
-
-
-        return new ResponseEntity(savedBook, HttpStatus.CREATED);
+            return new ResponseEntity(viewModel, HttpStatus.CREATED);
+        }catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 
-//
-//    @RequestMapping(value = "/books", method = RequestMethod.GET)
-//    public @ResponseBody ResponseEntity listAllBooks () {
-//        //TODO: check student logged in
-//
-//        //TODO:call the book service
-//        List<Book> books = bookService.findAll();
-//
-////        TODO: check if the list of books is not empty
-//        if (books.isEmpty()) {
-//            return new ResponseEntity(HttpStatus.NO_CONTENT);
-////             You many decide to return HttpStatus.NOT_FOUND
-//        }
-//        return new ResponseEntity(books, HttpStatus.OK);
-//    }
-//
+    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity listAllBooks (@RequestHeader HttpHeaders headers) {
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
+
+            List<Book> books = bookService.findAll();
+
+            UserViewModel userViewModel = new UserViewModel(student);
+            if (books.isEmpty()) {
+                return new ResponseEntity(userViewModel, HttpStatus.NO_CONTENT);
+            }
+            ListBookViewModel viewModel = new ListBookViewModel(userViewModel, books);
+            return new ResponseEntity(viewModel, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
+    }
+
 //    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
 //    public ResponseEntity getBookById(@PathVariable("id") Integer id) {
 //        //TODO: check student logged in
@@ -143,4 +147,7 @@ public class BookController {
 //        return new ResponseEntity(books, HttpStatus.OK);
 //    }
 
+    private String getHeaderString(HttpHeaders headers) {
+        return Helper.decodeBase64ToString((headers.get("Authorization").get(0)));
+    }
 }

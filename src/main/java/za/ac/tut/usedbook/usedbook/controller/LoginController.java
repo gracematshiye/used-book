@@ -59,7 +59,10 @@ public class LoginController {
 
             return new ResponseEntity("log-on", HttpStatus.OK);
 
-        }catch (Exception ex) {
+        } //catch (LoginService.LoginException ex) {
+//            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
+//        }
+        catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
