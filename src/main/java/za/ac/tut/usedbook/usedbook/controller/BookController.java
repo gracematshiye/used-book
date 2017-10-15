@@ -91,63 +91,106 @@ public class BookController {
         }
     }
 
-//    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
-//    public ResponseEntity getBookById(@PathVariable("id") Integer id) {
-//        //TODO: check student logged in
-////        logger.info("Fetching User with id {}", id);
-//        //TODO:call the book service
-//        Book book = bookService.findById(id);
-//        if (book == null) {
-//            return new ResponseEntity(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity(book, HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/book/isbn", method = RequestMethod.GET)
-//    public ResponseEntity getBookByISBN(@RequestHeader HttpHeaders headers) {
-//        //TODO: check student logged in
-////        logger.info("Fetching User with id {}", id);
-//
-//        String isbn = headers.get("isbn").get(0);
-//        //TODO:call the book service
-//        Book book = bookService.findByIsbn(isbn);
-//        if (book == null) {
-////            logger.error("User with id {} not found.", id);
-//            return new ResponseEntity("A book with ISBN number: " + isbn + ", is not found", HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity(book, HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/book/title", method = RequestMethod.GET)
-//    public ResponseEntity getBookByTitle(@RequestHeader HttpHeaders headers) {
-//        //TODO: check student logged in
-////        logger.info("Fetching User with id {}", id);
-//
-//        //TODO:call the book service
-//        String title = headers.get("title").get(0);
-//        List<Book> books = bookService.findByTitle(title);
-//        if (books.isEmpty()) {
-////            logger.error("User with id {} not found.", id);
-//            return new ResponseEntity("Books with title " + title + ", are not found", HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity(books, HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/book/category", method = RequestMethod.GET)
-//    public ResponseEntity getBookByCategory(@RequestHeader HttpHeaders headers) {
-//        //TODO: check student logged in
-////        logger.info("Fetching User with id {}", id);
-//        //TODO:call the book service
-//        String category = headers.get("category").get(0);
-//        List<Book> books = bookService.findByCategory(category);
-//        if (books.isEmpty()) {
-////            logger.error("User with id {} not found.", id);
-//            return new ResponseEntity("Books under this category " + category + ", are not found", HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity(books, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    public ResponseEntity getBookById(@PathVariable("id") Integer id, @RequestHeader HttpHeaders headers) {
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
 
-    private String getHeaderString(HttpHeaders headers) {
-        return Helper.decodeBase64ToString((headers.get("Authorization").get(0)));
+//        logger.info("Fetching User with id {}", id);
+
+            Book book = bookService.findById(id);
+            if (book == null) {
+                UserViewModel userViewModel = new UserViewModel(student);
+                return new ResponseEntity(userViewModel, HttpStatus.NOT_FOUND);
+            }
+
+            NewBookViewModel viewModel = new NewBookViewModel(student,book);
+            return new ResponseEntity(viewModel, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
     }
+
+    @RequestMapping(value = "/book/isbn", method = RequestMethod.GET)
+    public ResponseEntity getBookByISBN(@RequestHeader HttpHeaders headers) {
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
+
+//        logger.info("Fetching User with id {}", id);
+
+            String isbn = headers.get("isbn").get(0);
+
+            Book book = bookService.findByIsbn(isbn);
+            if (book == null) {
+
+                UserViewModel userViewModel = new UserViewModel(student);
+                return new ResponseEntity(userViewModel, HttpStatus.NOT_FOUND);
+            }
+
+            NewBookViewModel viewModel = new NewBookViewModel(student,book);
+            return new ResponseEntity(viewModel, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
+
+    }
+
+    @RequestMapping(value = "/book/title", method = RequestMethod.GET)
+    public ResponseEntity getBookByTitle(@RequestHeader HttpHeaders headers) {
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
+//        logger.info("Fetching User with id {}", id);
+
+            String title = headers.get("title").get(0);
+            List<Book> books = bookService.findByTitle(title);
+
+            UserViewModel userViewModel = new UserViewModel(student);
+            if (books.isEmpty()) {
+                return new ResponseEntity(userViewModel, HttpStatus.NO_CONTENT);
+            }
+
+            ListBookViewModel viewModel = new ListBookViewModel(userViewModel, books);
+            return new ResponseEntity(viewModel, HttpStatus.OK);
+        } catch (Exception e) {
+//            logger.error("User with id {} not found.", id);
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
+    }
+
+    @RequestMapping(value = "/book/category", method = RequestMethod.GET)
+    public ResponseEntity getBookByCategory(@RequestHeader HttpHeaders headers) {
+        try {
+            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            loginService.isStudentLoggedOn(uuid);
+            Student student = loginService.findStudentBySessionKey(uuid);
+
+//        logger.info("Fetching User with id {}", id);
+
+            String category = headers.get("category").get(0);
+            List<Book> books = bookService.findByCategory(category);
+
+            UserViewModel userViewModel = new UserViewModel(student);
+            if (books.isEmpty()) {
+                return new ResponseEntity(userViewModel, HttpStatus.NO_CONTENT);
+            }
+
+            ListBookViewModel viewModel = new ListBookViewModel(userViewModel, books);
+            return new ResponseEntity(viewModel, HttpStatus.OK);
+        } catch (Exception e) {
+//            logger.error("User with id {} not found.", id);
+            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+
+        }
+    }
+
 }
