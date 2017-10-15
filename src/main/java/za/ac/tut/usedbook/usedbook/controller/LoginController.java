@@ -33,14 +33,11 @@ public class LoginController {
     public @ResponseBody ResponseEntity login(@RequestBody CredentialModel credentialModel) throws NoSuchAlgorithmException {
 
         try {
-            //TODO: get info from the BODY
             int username = credentialModel.getUsername();
             String password = credentialModel.getPassword();
 
-            //TODO:Validate U and P
             Student student = loginService.validateUser(username, password);
 
-            //TODO: prepare the viewModel
             UserViewModel viewModel = new UserViewModel(student);
 
             return new ResponseEntity( viewModel, HttpStatus.OK);
@@ -59,9 +56,7 @@ public class LoginController {
 
             return new ResponseEntity("log-on", HttpStatus.OK);
 
-        } //catch (LoginService.LoginException ex) {
-//            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
-//        }
+        }
         catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
         }

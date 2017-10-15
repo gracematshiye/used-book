@@ -3,6 +3,7 @@ package za.ac.tut.usedbook.usedbook.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
+import za.ac.tut.usedbook.usedbook.entiy.Student;
 import za.ac.tut.usedbook.usedbook.repository.BookRepository;
 import za.ac.tut.usedbook.usedbook.validation.Helper;
 import za.ac.tut.usedbook.usedbook.validation.ValidateISBN;
@@ -23,7 +24,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book save(Book book) throws BookISBNException {
+    public Book save(Book book, Student student) throws BookISBNException {
 
         ValidateISBN.isISBN_valid(book.getIsbn());
 //        if(bookRepository.findByIsbn(book.getIsbn())!= null){
@@ -31,6 +32,7 @@ public class BookService {
 //        }
         book.setStatus("ON-SALE");
         book.setCreatedAt(Helper.currentDate());
+        book.setSellerId(student.getStudentId());
         return bookRepository.save(book);
     }
 
@@ -69,8 +71,9 @@ public class BookService {
 
     public Book update(Book book) {
         book.setStatus("SOLD");
-        return save(book);
+        return bookRepository.save(book);
     }
+
 
     public class BookISBNException extends RuntimeException{
         private final String message = "This ISBN number already exist. ISBN should be unique";

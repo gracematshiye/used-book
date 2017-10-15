@@ -42,6 +42,6 @@ public class TestBase {
     }
 
     public Book getSingleBook() {
-        return new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",300.90, "ON-SALE","additionalIno");
+        return new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",300.90, "ON-SALE","additionalIno", getExistingStudent().getStudentId());
     }
 }

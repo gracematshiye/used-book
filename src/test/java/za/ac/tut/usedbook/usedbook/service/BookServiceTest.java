@@ -42,12 +42,12 @@ public class BookServiceTest extends TestBase {
 
         Book book = getSingleBook();
         when(repoMock.save(book)).thenReturn(book);
-        service.save(book);
+        service.save(book, getExistingStudent());
         verify(repoMock, times(1)).save(book);
 
         try{
             when(repoMock.findByIsbn(book.getIsbn())).thenReturn(getSingleBook());
-            service.save(book);
+            service.save(book, getExistingStudent());
             fail("Did not throw BookISBNException");
         } catch (BookService.BookISBNException e){
             assertThat(e.getMessage()).isEqualTo("This ISBN number already exist. ISBN should be unique");
@@ -124,8 +124,8 @@ public class BookServiceTest extends TestBase {
 
     private List<Book> getListOfBooks() {
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "SOLD","additionalIno"));
-        books.add(new Book(2,"C#","Thomas", "ISBN-13: 978-0-596-52061-7","7th","lang","tpg",7.9, "ON-SALE","additionalIno"));
+        books.add(new Book(1,"Java", "Thoma JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "SOLD","additionalIno", getExistingStudent().getStudentId()));
+        books.add(new Book(2,"C#","Thomas", "ISBN-13: 978-0-596-52061-7","7th","lang","tpg",7.9, "ON-SALE","additionalIno", getExistingStudent().getStudentId()));
         return books;
     }
 }

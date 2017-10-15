@@ -36,10 +36,14 @@ public class Book /*implements Serializable */{
     private String additionalInfo;
     @Column(name = "created_at")
     private String createdAt;
+    @Column(name = "seller_id")
+    private Integer sellerId;
+
 
     public Book() {}
 
-    public Book(Integer id, String title, String author, String isbn, String edition, String language, String category, double price, String status, String additionalInfo) {
+    public Book(Integer id, String title, String author, String isbn, String edition, String language, String category,
+                double price, String status, String additionalInfo, Integer sellerId) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -50,9 +54,11 @@ public class Book /*implements Serializable */{
         this.price = price;
         this.status = status;
         this.additionalInfo = additionalInfo;
+        this.sellerId = sellerId;
     }
 
-    public Book(String title, String author, String isbn, String edition, String language, String category, double price, String status, String additionalInfo) {
+    public Book(String title, String author, String isbn, String edition, String language, String category,
+                double price, String status, String additionalInfo, Integer sellerId) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
@@ -62,6 +68,7 @@ public class Book /*implements Serializable */{
         this.price = price;
         this.status = status;
         this.additionalInfo = additionalInfo;
+        this.sellerId = sellerId;
     }
 
     public Integer getId() {
@@ -149,5 +156,13 @@ public class Book /*implements Serializable */{
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
     }
 }

@@ -58,7 +58,7 @@ public class BookController {
             loginService.isStudentLoggedOn(uuid);
             Student student = loginService.findStudentBySessionKey(uuid);
 
-            Book savedBook = bookService.save(book);
+            Book savedBook = bookService.save(book, student);
 
             NewBookViewModel viewModel = new NewBookViewModel(student,savedBook);
 

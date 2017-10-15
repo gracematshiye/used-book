@@ -104,8 +104,8 @@ public class StudentServiceTest extends TestBase{
 
     private List<Book> getListOfBooks() {
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book(1,"Java", "Thomas","isbn-1","7th","lang","TPG",7.9, "SOLD","additionalIno"));
-        books.add(new Book(2,"C#", "Thomas","isbn-2","7th","lang","tpg",7.9, "ON-SALE","additionalIno"));
+        books.add(new Book(1,"Java", "Thomas","isbn-1","7th","lang","TPG",7.9, "SOLD","additionalIno", getExistingStudent().getStudentId()));
+        books.add(new Book(2,"C#", "Thomas","isbn-2","7th","lang","tpg",7.9, "ON-SALE","additionalIno", getExistingStudent().getStudentId()));
         return books;
     }
 

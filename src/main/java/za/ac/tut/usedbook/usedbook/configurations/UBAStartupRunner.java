@@ -32,10 +32,10 @@ public class UBAStartupRunner implements CommandLineRunner {
         String payment_data = "";
 
         Student student = new Student(2100, "Lebo", "Mmala", 400.80, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
-        Book book = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "ON-SALE","additionalIno");
+        Book book = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",7.9, "ON-SALE","additionalIno", student.getStudentId());
 
         studentRepository.save(student);
-        bookService.save(book);
+        bookService.save(book, student);
 
 
         System.out.println("ApplicationStartupRunner run method Started !!\n");
