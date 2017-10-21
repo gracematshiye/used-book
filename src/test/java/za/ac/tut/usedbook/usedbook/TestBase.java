@@ -38,7 +38,7 @@ public class TestBase {
 //    }
 
     public Student getExistingStudent(){
-        return  new Student(2100, "Lebo", "Mmala", 400.80, "pass01",true, null);
+        return  new Student(2100, "Lebo", "Mmala", "lmmala@gmail.com", 400.80, "pass01",true, null);
     }
 
     public Book getSingleBook() {

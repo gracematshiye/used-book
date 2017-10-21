@@ -11,6 +11,7 @@ public class UserViewModel {
     private Integer studentId;
     private String name;
     private String surname;
+    private String email;
     private Double funds;
     private Boolean loggedIn;
     private String sessionKey;
@@ -19,6 +20,7 @@ public class UserViewModel {
         this.studentId = student.getStudentId();
         this.name = student.getName();
         this.surname = student.getSurname();
+        this.email = student.getEmail();
         this.funds = student.getFunds();
         this.loggedIn = student.getLoggedIn();
         setSessionKey(student.getSessionKey());
@@ -63,6 +65,14 @@ public class UserViewModel {
 
     public void setLoggedIn(Boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSessionKey() {

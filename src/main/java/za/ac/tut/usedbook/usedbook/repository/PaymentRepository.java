@@ -12,6 +12,6 @@ import java.util.List;
 @Transactional
 public interface PaymentRepository extends CrudRepository<Payment, Integer> {
     Payment save(Payment payment);
-    Payment findByRaymentReference(String id);
+    Payment findByPaymentReference(String paymentReference);
     List<Payment> findAll();
 }

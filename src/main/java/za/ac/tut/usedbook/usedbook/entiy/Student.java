@@ -19,6 +19,8 @@ public class Student /*implements Serializable */{
     private String name;
     @Column(name = "surname")
     private String surname;
+    @Column(name = "email")
+    private String email;
     @Column(name = "funds")
     private Double funds;
     @Column(name ="password")
@@ -38,10 +40,11 @@ public class Student /*implements Serializable */{
         this.funds = funds;
     }
 
-    public Student(Integer studentId, String name, String surname, Double funds, String password, Boolean loggedIn, String sessionKey) {
+    public Student(Integer studentId, String name, String surname, String email, Double funds, String password, Boolean loggedIn, String sessionKey) {
         this.studentId = studentId;
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.funds = funds;
         this.password = password;
         this.loggedIn = loggedIn;
@@ -70,6 +73,14 @@ public class Student /*implements Serializable */{
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Double getFunds() {
