@@ -54,6 +54,7 @@ public class BookService {
         return results;
 
     }
+
     public List<Book> findByTitle(String title) {
         List<Book> results = new ArrayList();
         for(Book book: findAll()) {
@@ -63,8 +64,6 @@ public class BookService {
         return results;
 
     }
-
-
 
     public Book update(Book book) {
         book.setStatus("SOLD");
