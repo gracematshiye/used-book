@@ -1,5 +1,7 @@
 package za.ac.tut.usedbook.usedbook.entiy;
 
+import za.ac.tut.usedbook.usedbook.validation.Helper;
+
 import javax.persistence.*;
 
 /**
@@ -68,8 +70,8 @@ public class Payment {
         this.bookId = bookId;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getAmount() throws Exception {
+        return Helper.getDoubleForm(amount);
     }
 
     public void setAmount(double amount) {

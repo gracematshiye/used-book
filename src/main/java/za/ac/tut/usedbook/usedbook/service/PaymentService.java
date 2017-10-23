@@ -51,9 +51,18 @@ public class PaymentService {
         studentRepository.save(buyer);
         bookRepository.save(book);
 
+//        MailSender.sendEmail();
         //TODO: return payment object
         return paymentRepository.save(payment);
 
+    }
+
+    public Payment findByPaymentReference(String paymentRef) throws NonExistedPaymentException {
+        Payment payment = paymentRepository.findByPaymentReference(paymentRef);
+//        if(payment == null) {
+//            throw new NonExistedPaymentException();
+//        }
+        return payment;
     }
 
     public boolean isSellerBuying(Book book, Student buyer) {
@@ -71,19 +80,19 @@ public class PaymentService {
         return true;
     }
 //2
-    public boolean isFundsSufficient(Student student, Book book) {
+    public boolean isFundsSufficient(Student student, Book book) throws Exception {
         if(Double.compare(student.getFunds(), book.getPrice()) < 0){
             throw new InsufficientFundsException();
         }
         return true;
     }
 //3
-    public Student deductFunds(Student student, Book book) {
+    public Student deductFunds(Student student, Book book) throws Exception {
         student.setFunds(student.getFunds() - book.getPrice());
         return student;
     }
 //4
-    public Student increaseFunds(Student student, Book book) {
+    public Student increaseFunds(Student student, Book book) throws Exception {
         student.setFunds(student.getFunds() + book.getPrice());
         return student;
     }
@@ -92,10 +101,6 @@ public class PaymentService {
         book.setStatus("SOLD");
         return book;
     }
-
-//    public Payment findByReference(String ref) {
-//        return new Payment();
-//    }
 
 
     public class InsufficientFundsException extends RuntimeException{
@@ -122,4 +127,11 @@ public class PaymentService {
         }
     }
 
+    public class NonExistedPaymentException extends Throwable {
+        private final String message = "Payment reference does not exist.";
+        @Override
+        public String getMessage() {
+            return message;
+        }
+    }
 }

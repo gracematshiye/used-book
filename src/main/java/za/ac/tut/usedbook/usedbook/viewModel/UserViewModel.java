@@ -16,7 +16,7 @@ public class UserViewModel {
     private Boolean loggedIn;
     private String sessionKey;
 
-    public UserViewModel(Student student) {
+    public UserViewModel(Student student) throws Exception {
         this.studentId = student.getStudentId();
         this.name = student.getName();
         this.surname = student.getSurname();

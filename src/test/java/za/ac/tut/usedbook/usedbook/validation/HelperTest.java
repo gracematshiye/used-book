@@ -51,7 +51,34 @@ public class HelperTest extends TestBase {
             int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
-        System.out.println(builder.toString());
+//        System.out.println(builder.toString());
     }
 
+    @Test
+    public void shouldRoundOffToTwoDecimal() throws Exception {
+//        string pattern = "0.00";
+        double doubleNum = 1098.36876832;
+        System.out.println(Helper.getDoubleForm(doubleNum));
+
+
+    }
+
+
+    @Test
+    public void messageEmail() throws Exception {
+        String msg = "Dear SELLER\n\n" +
+                "Please take note that BUYER made a payment to your student account.\n\n" +
+                "The payment details are as follows:\n" +
+                "Payment reference:\t\t paymentRef\n" +
+                "Payment date:\t\t\t 08/10/2017 09:00\n\n" +
+                "Payment details\n" +
+                "Amount:\t\t\t\t\tR 1500.00\n" +
+                "New Balance:\t\t\tR789\n" +
+                "Title:\t\t\t\t\tbookname\n" +
+                "Author:\t\t\t\t\thguer\n" +
+                "ISBN:\t\t\t\t\tshdfgd\n\n\n" +
+                "Thanks";
+        System.out.println(msg);
+
+    }
 }

@@ -21,7 +21,7 @@ public class NewBookViewModel {
     private String additionalInfo;
     private String createdAt;
 
-    public NewBookViewModel(Student student, Book book) {
+    public NewBookViewModel(Student student, Book book) throws Exception {
         this.userViewModel = new UserViewModel(student);
         this.id = book.getId();
         this.title = book.getTitle();

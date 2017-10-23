@@ -5,6 +5,7 @@ import org.junit.Test;
 import za.ac.tut.usedbook.usedbook.TestBase;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
 import za.ac.tut.usedbook.usedbook.entiy.Student;
+import za.ac.tut.usedbook.usedbook.validation.Helper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -90,7 +91,7 @@ public class PaymentServiceTest extends TestBase{
         double expected = student.getFunds() - book.getPrice();
 
         student = paymentService.deductFunds(student, book);
-        assertThat(student.getFunds()).isEqualTo(expected);
+        assertThat(student.getFunds()).isEqualTo(Helper.getDoubleForm(expected));
 
     }
 

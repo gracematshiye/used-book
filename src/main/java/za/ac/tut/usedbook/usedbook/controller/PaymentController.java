@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import za.ac.tut.usedbook.usedbook.entiy.Book;
 import za.ac.tut.usedbook.usedbook.entiy.Payment;
 import za.ac.tut.usedbook.usedbook.entiy.Student;
+import za.ac.tut.usedbook.usedbook.sendingmail.MailSender;
 import za.ac.tut.usedbook.usedbook.service.BookService;
 import za.ac.tut.usedbook.usedbook.service.LoginService;
 import za.ac.tut.usedbook.usedbook.service.PaymentService;
@@ -48,9 +49,10 @@ public class PaymentController {
 
             Payment payment = paymentService.processPayment(book, buyer);
 
-//            PaymentViewModel viewModel = new PaymentViewModel(payment, buyer, seller,book);
 
-            return new ResponseEntity(payment, HttpStatus.OK);
+            MailSender.sendEmail(payment, buyer, seller, book);
+            return new ResponseEntity("Your Payment was successful.\nYou'll receive payment notification email", HttpStatus.OK);
+//            return new ResponseEntity(payment, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
         }

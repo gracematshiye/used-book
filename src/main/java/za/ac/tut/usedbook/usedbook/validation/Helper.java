@@ -3,6 +3,7 @@ package za.ac.tut.usedbook.usedbook.validation;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -54,6 +55,13 @@ public class Helper {
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
         return (builder.toString());
+    }
+
+    public static double getDoubleForm(Double price) throws Exception  {
+        String pattern = "0.00";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        String format = decimalFormat.format(price);
+        return Double.valueOf(format);
     }
 
 }

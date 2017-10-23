@@ -1,5 +1,7 @@
 package za.ac.tut.usedbook.usedbook.entiy;
 
+import za.ac.tut.usedbook.usedbook.validation.Helper;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -83,8 +85,8 @@ public class Student /*implements Serializable */{
         this.email = email;
     }
 
-    public Double getFunds() {
-        return funds;
+    public Double getFunds() throws Exception {
+        return Helper.getDoubleForm(funds);
     }
 
     public void setFunds(Double funds) {
