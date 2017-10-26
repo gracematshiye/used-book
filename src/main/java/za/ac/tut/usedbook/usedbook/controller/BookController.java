@@ -36,21 +36,22 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ResponseEntity home (@RequestHeader HttpHeaders headers){
-        try {
-            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
-            loginService.isStudentLoggedOn(uuid);
-
-            return new ResponseEntity("Spring REST Dinesh on Java!!!", HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
-        }
-    }
+//    @RequestMapping(value = "/home", method = RequestMethod.GET)
+//    public ResponseEntity home (@RequestHeader HttpHeaders headers){
+//        try {
+//            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+//            loginService.isStudentLoggedOn(uuid);
+//
+//            return new ResponseEntity("Spring REST Dinesh on Java!!!", HttpStatus.OK);
+//        } catch (Exception ex) {
+//            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
+//        }
+//    }
 
     @RequestMapping(value = "/add",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity createBook(@RequestBody Book book, @RequestHeader HttpHeaders headers) {
 
         try {
@@ -69,7 +70,10 @@ public class BookController {
     }
 
 
-    @RequestMapping(value = "/books", method = RequestMethod.GET)
+    @RequestMapping(value = "/books",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity listAllBooks (@RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
@@ -91,7 +95,10 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/{id}",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getBookById(@PathVariable("id") Integer id, @RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
@@ -115,7 +122,10 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "/book/isbn", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/isbn",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getBookByISBN(@RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
@@ -142,7 +152,10 @@ public class BookController {
 
     }
 
-    @RequestMapping(value = "/book/title", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/title",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getBookByTitle(@RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
@@ -167,7 +180,10 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "/book/category", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/category",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getBookByCategory(@RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));

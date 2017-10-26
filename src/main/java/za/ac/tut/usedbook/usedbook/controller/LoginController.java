@@ -29,7 +29,8 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity login(@RequestBody CredentialModel credentialModel) throws NoSuchAlgorithmException {
 
         try {
@@ -48,7 +49,8 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody ResponseEntity logout(@RequestHeader HttpHeaders httpHeaders) throws NoSuchAlgorithmException {
         try {
             String uuid = getHeaderString(httpHeaders);

@@ -33,8 +33,8 @@ public class UBAStartupRunner implements CommandLineRunner {
         Student student6 = new Student(210253009, "Grace", "Matshiye", "gracematshiye@gmail.com", 300.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
         Student student8 = new Student(2110, "Khomotso", "Modika", "gtmatshiye@hotmail.com", 400.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
 
-        Book book1 = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",70.00, "ON-SALE","additionalIno", student8.getStudentId());
-        Book book2= new Book("C#", "Thomas JR","ISBN-13: 978-0-596-52068-8","7th","lang","TPG",110.00, "ON-SALE","additionalIno", student8.getStudentId());
+        Book book1 = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",70.00, "ON-SALE","additionalIno", student1.getStudentId());
+        Book book2= new Book("C#", "Thomas JR","ISBN-13: 978-0-596-52068-8","7th","lang","TPG",110.00, "ON-SALE","additionalIno", student3.getStudentId());
 
         studentRepository.save(student1);
         studentRepository.save(student2);
@@ -45,8 +45,8 @@ public class UBAStartupRunner implements CommandLineRunner {
         studentRepository.save(student7);
         studentRepository.save(student8);
 
-        bookService.save(book1, student8);
-        bookService.save(book2, student8);
+        bookService.save(book1, student1);
+        bookService.save(book2, student3);
 
         System.out.println("ApplicationStartupRunner run method Started !!\n");
         System.out.println(studentRepository.findAll().iterator().next().getLoggedIn());
