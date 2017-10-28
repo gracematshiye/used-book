@@ -15,7 +15,7 @@ import za.ac.tut.usedbook.usedbook.service.LoginService;
 import za.ac.tut.usedbook.usedbook.service.PaymentService;
 import za.ac.tut.usedbook.usedbook.service.StudentService;
 import za.ac.tut.usedbook.usedbook.validation.Helper;
-import za.ac.tut.usedbook.usedbook.viewModel.PaymentView;
+import za.ac.tut.usedbook.usedbook.viewModel.PaymentViewModel;
 import za.ac.tut.usedbook.usedbook.viewModel.UserViewModel;
 
 /**
@@ -57,8 +57,8 @@ public class PaymentController {
 
 
             MailSender.sendEmail(payment, buyer, seller, book);
-            PaymentView paymentView = new PaymentView(new UserViewModel(buyer),payment);
-            return new ResponseEntity(paymentView, HttpStatus.OK);
+            PaymentViewModel paymentViewModel = new PaymentViewModel(new UserViewModel(buyer),payment);
+            return new ResponseEntity(paymentViewModel, HttpStatus.OK);
 //            return new ResponseEntity(payment, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
