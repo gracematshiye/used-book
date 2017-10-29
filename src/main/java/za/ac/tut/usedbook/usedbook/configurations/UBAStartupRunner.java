@@ -31,7 +31,6 @@ public class UBAStartupRunner implements CommandLineRunner {
         Student student5 = new Student(213639480, "Nonduduzo", "Masilela", "nonduduzomasilela03@gmail.com", 500.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
         Student student7 = new Student(211108711, "Derrick", "Rasekgokga", "derrickrasekgokga@gmail.com", 400.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
         Student student6 = new Student(210253009, "Grace", "Matshiye", "gracematshiye@gmail.com", 300.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
-        Student student8 = new Student(2110, "Khomotso", "Modika", "gtmatshiye@hotmail.com", 400.00, "28a4565a4953cb4e7e23317ba0504f4c",false, null);
 
         Book book1 = new Book("Java", "Thomas JR","ISBN-13: 978-0-596-52068-7","7th","lang","TPG",70.00, "ON-SALE","additionalIno", student1.getStudentId());
         Book book2= new Book("C#", "Thomas JR","ISBN-13: 978-0-596-52068-8","7th","lang","TPG",110.00, "ON-SALE","additionalIno", student3.getStudentId());
@@ -43,7 +42,6 @@ public class UBAStartupRunner implements CommandLineRunner {
         studentRepository.save(student5);
         studentRepository.save(student6);
         studentRepository.save(student7);
-        studentRepository.save(student8);
 
         bookService.save(book1, student1);
         bookService.save(book2, student3);
