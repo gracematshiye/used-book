@@ -40,13 +40,41 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @RequestMapping(value = "/pay/{book_id}",
-                    method = RequestMethod.GET,
-                    consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity makePayment (@PathVariable("book_id") Integer bookId, @RequestHeader HttpHeaders headers) throws Exception {
+//    @RequestMapping(value = "/pay/{book_id}",
+//                    method = RequestMethod.GET,
+//                    consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+//                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity makePayment (@PathVariable("book_id") Integer bookId, @RequestHeader HttpHeaders headers) throws Exception {
+//        try {
+//            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+//            loginService.isStudentLoggedOn(uuid);
+//
+//            Book book = bookService.findById(bookId);
+//            Student buyer = loginService.findStudentBySessionKey(uuid);
+//            Student seller = loginService.findStudentByUsername(book.getSellerId());
+//
+//            Payment payment = paymentService.processPayment(book, buyer);
+//
+//
+//            MailSender.sendEmail(payment, buyer, seller, book);
+//            PaymentViewModel paymentViewModel = new PaymentViewModel(new UserViewModel(buyer),payment);
+//            return new ResponseEntity(paymentViewModel, HttpStatus.OK);
+////            return new ResponseEntity(payment, HttpStatus.OK);
+//        } catch (Exception ex) {
+//            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
+//        }
+//    }
+
+
+
+    @RequestMapping(value = "/pay/book",
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity makePayment (@RequestHeader HttpHeaders headers) throws Exception {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+            Integer bookId = Integer.valueOf(headers.get("book-id").get(0));
             loginService.isStudentLoggedOn(uuid);
 
             Book book = bookService.findById(bookId);

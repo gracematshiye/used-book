@@ -1,5 +1,6 @@
 package za.ac.tut.usedbook.usedbook.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpHeaders;
@@ -36,28 +37,44 @@ public class BookController {
         this.bookService = bookService;
     }
 
-//    @RequestMapping(value = "/home", method = RequestMethod.GET)
-//    public ResponseEntity home (@RequestHeader HttpHeaders headers){
+//      TODO: original
+//    @RequestMapping(value = "/add",
+//            method = RequestMethod.POST,
+//            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public @ResponseBody ResponseEntity createBook(@RequestBody Book book, @RequestHeader HttpHeaders headers) {
+//
 //        try {
 //            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
 //            loginService.isStudentLoggedOn(uuid);
+//            Student student = loginService.findStudentBySessionKey(uuid);
 //
-//            return new ResponseEntity("Spring REST Dinesh on Java!!!", HttpStatus.OK);
-//        } catch (Exception ex) {
-//            return new ResponseEntity(ex.getMessage(), HttpStatus.FORBIDDEN);
+//            Book savedBook = bookService.save(book, student);
+//
+//            NewBookViewModel viewModel = new NewBookViewModel(student,savedBook);
+//
+//            return new ResponseEntity(viewModel, HttpStatus.CREATED);
+//        }catch (Exception e) {
+//            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
 //        }
 //    }
+//    TODO: last
+//    ================================
 
     @RequestMapping(value = "/add",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity createBook(@RequestBody Book book, @RequestHeader HttpHeaders headers) {
+    public @ResponseBody ResponseEntity createBook(@RequestHeader HttpHeaders headers) {
 
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
             loginService.isStudentLoggedOn(uuid);
             Student student = loginService.findStudentBySessionKey(uuid);
+            String bookJson = headers.get("book").get(0);
+
+            ObjectMapper mapper = new ObjectMapper();
+            Book book = mapper.readValue(bookJson, Book.class);
 
             Book savedBook = bookService.save(book, student);
 
@@ -95,14 +112,47 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "/book/{id}",
+
+//      TODO: original
+//    @RequestMapping(value = "/book/{id}",
+//            method = RequestMethod.GET,
+//            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity getBookById(@PathVariable("id") String id, @RequestHeader HttpHeaders headers) {
+//        try {
+//            String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
+//            loginService.isStudentLoggedOn(uuid);
+//            Student student = loginService.findStudentBySessionKey(uuid);
+//
+////        logger.info("Fetching User with id {}", id);
+//
+//            Book book = bookService.findById(Integer.valueOf(id));
+//            if (book == null) {
+//                UserViewModel userViewModel = new UserViewModel(student);
+//                return new ResponseEntity(userViewModel, HttpStatus.NOT_FOUND);
+//            }
+//
+//            NewBookViewModel viewModel = new NewBookViewModel(student,book);
+//            return new ResponseEntity(viewModel, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+//
+//        }
+//    }
+    //    TODO: last
+//    ================================
+
+    @RequestMapping(value = "/book/id",
             method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity getBookById(@PathVariable("id") Integer id, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity getBookById(@RequestHeader HttpHeaders headers) {
         try {
             String uuid = Helper.decodeBase64ToString(headers.get("Authorization").get(0));
             loginService.isStudentLoggedOn(uuid);
+            Integer id = Integer.valueOf(headers.get("book-id").get(0));
+
             Student student = loginService.findStudentBySessionKey(uuid);
 
 //        logger.info("Fetching User with id {}", id);

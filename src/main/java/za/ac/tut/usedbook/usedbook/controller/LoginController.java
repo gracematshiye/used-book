@@ -56,7 +56,7 @@ public class LoginController {
             String uuid = getHeaderString(httpHeaders);
             loginService.studentLogOut(uuid);
 
-            return new ResponseEntity("log-on", HttpStatus.OK);
+            return new ResponseEntity("You have successfully logged out!", HttpStatus.OK);
 
         }
         catch (Exception ex) {
