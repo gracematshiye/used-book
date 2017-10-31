@@ -3,13 +3,14 @@ package za.ac.tut.usedbook.usedbook.entiy;
 import za.ac.tut.usedbook.usedbook.validation.Helper;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by gracem on 2017/10/12.
  */
 @Entity
 @Table(name = "PAYMENT")
-public class Payment {
+public class Payment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

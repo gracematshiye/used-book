@@ -6,13 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by gracem on 2017/09/24.
  */
 @Entity
 @Table(name = "STUDENT")
-public class Student /*implements Serializable */{
+public class Student implements Serializable {
 
     @Id
     @Column(name = "student_id")

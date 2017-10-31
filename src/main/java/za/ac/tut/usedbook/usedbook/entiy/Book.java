@@ -3,6 +3,7 @@ package za.ac.tut.usedbook.usedbook.entiy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by gracem on 2017/09/24.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "BOOK")
 @EntityListeners(AuditingEntityListener.class)
-public class Book /*implements Serializable */{
+public class Book implements Serializable {
 
 
     @Id
